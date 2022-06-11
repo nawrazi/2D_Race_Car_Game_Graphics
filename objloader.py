@@ -53,7 +53,7 @@ class OBJ:
         self.generate()
 
     def loadTexture(self):
-        surface = pygame.image.load(f'model/skin{self.car_color}/0000.BMP')
+        surface = pygame.image.load(f'model/skin{self.car_color}.BMP')
         image = pygame.image.tostring(surface, 'RGBA', True)
         ix, iy = surface.get_rect().size
         texture_id = glGenTextures(1)
