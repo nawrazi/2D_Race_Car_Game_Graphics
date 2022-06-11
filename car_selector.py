@@ -1,6 +1,6 @@
 from pygame.constants import *
 from OpenGL.GLU import *
-from objloader import *
+from loader import *
 
 pygame.init()
 viewport = (800, 600)
@@ -16,7 +16,7 @@ glEnable(GL_COLOR_MATERIAL)
 glEnable(GL_DEPTH_TEST)
 glShadeModel(GL_SMOOTH)
 
-obj = OBJ('model/Porsche_911_GT2.obj', car_color=1)
+model = Loader('model/porsche.obj', car_color=1)
 
 glMatrixMode(GL_PROJECTION)
 glLoadIdentity()
@@ -46,11 +46,11 @@ while True:
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
-    glTranslate(0, -0.2, -4)
+    glTranslate(0, -0.2, -3.5)
     glRotate(ry - 50, 1, 0, 0)
     glRotate(rz - 90, 0, 0, 1)
     glRotate(rx - 40, 0, 1, 0)
-    glCallList(obj.gl_list)
+    glCallList(model.gl_list)
 
     pygame.display.flip()
     pygame.time.wait(10)

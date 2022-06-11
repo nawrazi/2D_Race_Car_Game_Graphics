@@ -1,7 +1,7 @@
 import pygame
 from OpenGL.GL import *
 
-class OBJ:
+class Loader:
     def __init__(self, filename, car_color):
         if not 1 <= car_color <= 5:
             raise Exception("Invalid color selection")
@@ -12,7 +12,7 @@ class OBJ:
         self.textures = []
         self.faces = []
         self.gl_list = 0
-        self.mtl = {}
+        self.texture_id = None
 
         for line in open(filename):
             values = line.split()
@@ -49,10 +49,10 @@ class OBJ:
 
                 self.faces.append((faces, norms, textures))
 
-        self.loadTexture()
+        self.loadSkin()
         self.generate()
 
-    def loadTexture(self):
+    def loadSkin(self):
         surface = pygame.image.load(f'model/skin{self.car_color}.BMP')
         image = pygame.image.tostring(surface, 'RGBA', True)
         ix, iy = surface.get_rect().size
@@ -63,7 +63,7 @@ class OBJ:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
 
-        self.mtl['texture_Kd'] = texture_id
+        self.texture_id = texture_id
 
     def generate(self):
         self.gl_list = glGenLists(1)
@@ -72,7 +72,7 @@ class OBJ:
         glFrontFace(GL_CCW)
 
         for vertices, normals, textures in self.faces:
-            glBindTexture(GL_TEXTURE_2D, self.mtl['texture_Kd'])
+            glBindTexture(GL_TEXTURE_2D, self.texture_id)
             glBegin(GL_POLYGON)
 
             for i in range(len(vertices)):
