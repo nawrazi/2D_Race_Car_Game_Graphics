@@ -49,8 +49,7 @@ class CarSelector:
 
                 elif e.type == pygame.KEYDOWN:
                     if e.key == 13:
-                        print(f'START GAME {self.cur_color}')
-                        continue
+                        return self.cur_color
 
                     new_color = random.randint(0, 5)
                     while new_color == self.cur_color:
@@ -84,8 +83,3 @@ class CarSelector:
 
             pygame.display.flip()
             pygame.time.wait(10)
-
-
-if __name__ == '__main__':
-    window = CarSelector()
-    window.run()
