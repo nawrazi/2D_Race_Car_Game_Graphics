@@ -2,11 +2,11 @@ import pygame
 from OpenGL.GL import *
 
 class Loader:
-    def __init__(self, filename, car_color):
-        if not 1 <= car_color <= 5:
+    def __init__(self, filename, color):
+        if not 1 <= color <= 5:
             raise Exception("Invalid color selection")
 
-        self.car_color = car_color
+        self.car_color = color
         self.vertices = []
         self.normals = []
         self.textures = []
