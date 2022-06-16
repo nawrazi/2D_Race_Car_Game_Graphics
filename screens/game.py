@@ -1,6 +1,22 @@
 import pygame as pg
 import random
 
+class Car:
+    """
+    A class used to represent the player and enemy cars in the game.
+
+    PARAMETERS
+    ----------
+    icon : Surface
+        The icon displayed on the screen.
+    location : tuple<float, float>
+        The coordinate location of the car on the screen.
+    """
+    def __init__(self, icon, location):
+        self.icon = pg.image.load(icon)
+        self.x, self.y = location
+        self.size = 64
+
 class Game:
     """
     A class that contains the contents of the main game screen.
@@ -39,15 +55,15 @@ class Game:
             'game_over': pg.font.SysFont('futura', 100)
         }
 
-        self.enemy_icon = pg.image.load('assets/icons/iconX.png')
-        self.enemy_x = random.randint(0, 672)
-        self.enemy_y = 20
+        self.enemy = Car(
+            'assets/icons/iconX.png',
+            (random.randint(0, 672), 20)
+        )
 
-        self.player_icon = pg.image.load(f'assets/icons/icon{car_color}.png')
-        self.player_x = self.screenWidth // 2
-        self.player_y = self.screenHeight * .75
-
-        self.car_size = 64
+        self.player = Car(
+            f'assets/icons/icon{car_color}.png',
+            (self.screenWidth / 2, self.screenHeight * 0.75)
+        )
 
     def displayScore(self):
         self.screen.blit(
@@ -72,11 +88,11 @@ class Game:
             pg.display.update()
 
     def drawEnemy(self):
-        self.enemy_y += 3
-        self.screen.blit(self.enemy_icon, (self.enemy_x, self.enemy_y))
+        self.enemy.y += 3
+        self.screen.blit(self.enemy.icon, (self.enemy.x, self.enemy.y))
 
     def drawPlayer(self):
-        self.screen.blit(self.player_icon, (self.player_x, self.player_y))
+        self.screen.blit(self.player.icon, (self.player.x, self.player.y))
 
     def play(self):
         while True:
@@ -87,22 +103,22 @@ class Game:
                     return
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_LEFT:
-                        self.player_x -= 120
+                        self.player.x -= 120
                     if event.key == pg.K_RIGHT:
-                        self.player_x += 120
+                        self.player.x += 120
 
-            if self.player_y < self.enemy_y + (self.car_size * 2):
-                if self.enemy_x < self.player_x < self.enemy_x + self.car_size:
+            if self.player.y < self.enemy.y + (self.enemy.size * 2):
+                if self.enemy.x < self.player.x < self.enemy.x + self.enemy.size:
                     self.crashScreen()
-                elif self.enemy_x < self.player_x + self.car_size < self.enemy_x + self.car_size:
+                elif self.enemy.x < self.player.x + self.player.size < self.enemy.x + self.enemy.size:
                     self.crashScreen()
 
-            if not 1 <= self.player_x <= 672:
-                self.player_x = 1 if self.player_x < 1 else 672
+            if not 1 <= self.player.x <= 672:
+                self.player.x = 1 if self.player.x < 1 else 672
 
-            if self.enemy_y >= 590:
-                self.enemy_y = 0 - self.car_size
-                self.enemy_x = random.randint(0, 672)
+            if self.enemy.y >= 590:
+                self.enemy.y = 0 - self.enemy.size
+                self.enemy.x = random.randint(0, 672)
                 self.playerScore += 1
 
             self.drawPlayer()
