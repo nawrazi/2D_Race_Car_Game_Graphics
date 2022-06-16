@@ -41,14 +41,14 @@ class Game:
     """
     def __init__(self, car_color):
         pg.init()
-        self.screenWidth = 800
-        self.screenHeight = 600
+        self.screen_width = 800
+        self.screen_height = 600
 
-        self.screen = pg.display.set_mode((self.screenWidth, self.screenHeight))
+        self.screen = pg.display.set_mode((self.screen_width, self.screen_height))
         pg.display.set_caption('Racer')
         pg.display.set_icon(pg.image.load('assets/icons/logo.png'))
 
-        self.playerScore = 0
+        self.score = 0
 
         self.fonts = {
             'score': pg.font.SysFont('futura', 30),
@@ -62,23 +62,23 @@ class Game:
 
         self.player = Car(
             f'assets/icons/icon{car_color}.png',
-            (self.screenWidth / 2, self.screenHeight * 0.75)
+            (self.screen_width / 2, self.screen_height * 0.75)
         )
 
     def displayScore(self):
         self.screen.blit(
-            self.fonts['score'].render(f'Score: {self.playerScore}', True, (200, 200, 255)),
+            self.fonts['score'].render(f'Score: {self.score}', True, (200, 200, 255)),
             (10, 10)
         )
 
     def crashScreen(self):
         self.screen.blit(
             self.fonts['game_over'].render('Game Over', True, (175, 0, 0)),
-            (self.screenWidth // 10, self.screenHeight // 3)
+            (self.screen_width // 10, self.screen_height // 3)
         )
         self.screen.blit(
-            self.fonts['score'].render(f'Score: {self.playerScore}', True, (175, 0, 0)),
-            (self.screenWidth // 10, (self.screenHeight // 3) + 140)
+            self.fonts['score'].render(f'Score: {self.score}', True, (175, 0, 0)),
+            (self.screen_width // 10, (self.screen_height // 3) + 140)
         )
 
         while True:
@@ -119,7 +119,7 @@ class Game:
             if self.enemy.y >= 590:
                 self.enemy.y = 0 - self.enemy.size
                 self.enemy.x = random.randint(0, 672)
-                self.playerScore += 1
+                self.score += 1
 
             self.drawPlayer()
             self.drawEnemy()
