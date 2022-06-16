@@ -11,7 +11,7 @@ class CarSelector:
     METHODS
     -------
     draw(new_color=None)
-        Renders the loaded model. Reloads the model if new_color is passed in.
+        Renders the loaded model. Reloads the model if called with new_color.
     menu()
         Renders the info menu at the bottom-left of the screen.
     run()

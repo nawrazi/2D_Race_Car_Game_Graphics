@@ -12,13 +12,13 @@ class Game:
 
     METHODS
     -------
-    displayScore(x, y)
-        Displays the game score at the specified x and y coordinates.
+    displayScore()
+        Displays the game score in the top-left corner of the screen.
     crashScreen()
         Displays the game over screen with the final score.
     drawEnemy()
         Draws an enemy car at the top of the screen.
-     drawPlayer()
+    drawPlayer()
         Draws the player car at the center-bottom of the screem.
     play()
         Contains the main loop, handles user input and collision detection.
@@ -49,10 +49,10 @@ class Game:
 
         self.car_size = 64
 
-    def displayScore(self, x, y):
+    def displayScore(self):
         self.screen.blit(
             self.fonts['score'].render(f'Score: {self.playerScore}', True, (200, 200, 255)),
-            (x, y)
+            (10, 10)
         )
 
     def crashScreen(self):
@@ -107,6 +107,6 @@ class Game:
 
             self.drawPlayer()
             self.drawEnemy()
-            self.displayScore(10, 10)
+            self.displayScore()
 
             pg.display.update()
