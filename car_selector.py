@@ -10,6 +10,7 @@ class CarSelector:
         self.viewport = (800, 600)
         self.surface = pygame.display.set_mode(self.viewport, OPENGL | DOUBLEBUF)
         pygame.display.set_caption('Car Selection')
+        glClearColor(.98, .94, .9, 0)
 
         glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 200, 100, 0.0))
         glLightfv(GL_LIGHT0, GL_AMBIENT, (0.2, 0.2, 0.2, 1.0))
@@ -20,11 +21,12 @@ class CarSelector:
         glEnable(GL_DEPTH_TEST)
         glShadeModel(GL_SMOOTH)
 
-        self.cur_color = 1
+        self.cur_color = 3
+        self.all_skins = 7
         self.model = Loader('model/porsche.obj', color=self.cur_color)
 
     def draw(self, new_color=None):
-        if new_color:
+        if new_color is not None:
             self.cur_color = new_color
             self.model = Loader('model/porsche.obj', color=self.cur_color)
             glCallList(self.model.gl_list)
@@ -48,15 +50,22 @@ class CarSelector:
                     quit()
 
                 elif e.type == pygame.KEYDOWN:
-                    if e.key == 13:
+                    if e.key == pygame.K_RETURN:
                         return self.cur_color
 
-                    new_color = random.randint(0, 5)
-                    while new_color == self.cur_color:
-                        new_color = random.randint(0, 5)
+                    if e.key == pygame.K_r:
+                        new_color = random.randint(0, self.all_skins)
+                        while new_color == self.cur_color:
+                            new_color = random.randint(0, self.all_skins)
+                        self.draw(new_color)
 
-                    self.draw(new_color)
-                    continue
+                    elif e.key == pygame.K_LEFT:
+                        new_color = self.cur_color - 1 if self.cur_color > 0 else self.all_skins - 1
+                        self.draw(new_color)
+
+                    elif e.key == pygame.K_RIGHT:
+                        new_color = (self.cur_color + 1) % self.all_skins
+                        self.draw(new_color)
 
                 elif e.type == MOUSEBUTTONDOWN:
                     rotate = True

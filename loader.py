@@ -4,7 +4,7 @@ from OpenGL.GL import *
 class Loader:
 
     def __init__(self, filename, color):
-        if not 1 <= color <= 5:
+        if not 0 <= color <= 6:
             raise Exception("Invalid color selection")
 
         self.car_color = color
