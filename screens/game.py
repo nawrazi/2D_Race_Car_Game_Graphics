@@ -10,7 +10,7 @@ class Game:
 
         self.screen = pg.display.set_mode((self.screenWidth, self.screenHeight))
         pg.display.set_caption('Racer')
-        pg.display.set_icon(pg.image.load('gameAssets/logo.png'))
+        pg.display.set_icon(pg.image.load('assets/icons/logo.png'))
 
         self.playerScore = 0
 
@@ -19,11 +19,11 @@ class Game:
             'game_over': pg.font.SysFont('futura', 100)
         }
 
-        self.enemy_icon = pg.image.load('gameAssets/iconX.png')
+        self.enemy_icon = pg.image.load('assets/icons/iconX.png')
         self.enemy_x = random.randint(0, 672)
         self.enemy_y = 20
 
-        self.player_icon = pg.image.load(f'gameAssets/icon{car_color}.png')
+        self.player_icon = pg.image.load(f'assets/icons/icon{car_color}.png')
         self.player_x = self.screenWidth // 2
         self.player_y = self.screenHeight * .75
 

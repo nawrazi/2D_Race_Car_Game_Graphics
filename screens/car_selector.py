@@ -1,6 +1,6 @@
 from pygame.constants import *
 from OpenGL.GLU import *
-from loader import *
+from utils.loader import *
 import random
 
 class CarSelector:
@@ -23,12 +23,12 @@ class CarSelector:
 
         self.cur_color = 3
         self.all_skins = 7
-        self.model = Loader('model/porsche.obj', color=self.cur_color)
+        self.model = Loader('assets/model/porsche.obj', color=self.cur_color)
 
     def draw(self, new_color=None):
         if new_color is not None:
             self.cur_color = new_color
-            self.model = Loader('model/porsche.obj', color=self.cur_color)
+            self.model = Loader('assets/model/porsche.obj', color=self.cur_color)
             glCallList(self.model.gl_list)
 
         glMatrixMode(GL_PROJECTION)
