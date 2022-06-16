@@ -4,7 +4,21 @@ from utils.loader import *
 import random
 
 class CarSelector:
+    """
+    A class that contains the contents of the car selection screen.
+    Loads the model at instantiation.
 
+    METHODS
+    -------
+    draw(new_color=None)
+        Renders the loaded model. Reloads the model if new_color is passed in.
+    menu()
+        Renders the info menu at the bottom-left of the screen.
+    run()
+        Contains the main loop.
+        Handles mouse gestures to control rotation of the object.
+        Handles keyboard inputs to control color selection.
+    """
     def __init__(self):
         pygame.init()
         self.viewport = (800, 600)

@@ -2,12 +2,30 @@ import pygame
 from OpenGL.GL import *
 
 class Loader:
+    """
+    A class that loads the car model and applies a skin to it.
 
+    PARAMETERS
+    ----------
+    filename : string
+        The relative location of the object to be loaded.
+    color : int
+        The color of the skin to be applied to the object.
+
+    METHODS
+    -------
+    loadObject(filename)
+        Reads the file passed to it and organizes the class property data structures based on the wavefront format.
+    loadSkin(color : int)
+        Loads a skin based on the specified color and organizes it into the appropriate data structure.
+    generate()
+        Creates the 3D mesh ready to be rendered. Applies the loaded skin to the object and stores the generated 3D
+        object in the appropriate data structure ready to be rendered.
+    """
     def __init__(self, filename, color):
         if not 0 <= color <= 6:
             raise Exception(f"Invalid color selection: {color}")
 
-        self.car_color = color
         self.vertices = []
         self.normals = []
         self.textures = []
@@ -15,6 +33,11 @@ class Loader:
         self.gl_list = 0
         self.texture_id = None
 
+        self.loadObject(filename)
+        self.loadSkin(color)
+        self.generate()
+
+    def loadObject(self, filename):
         for line in open(filename):
             values = line.split()
             if not values:
@@ -50,11 +73,8 @@ class Loader:
 
                 self.faces.append((faces, norms, textures))
 
-        self.loadSkin()
-        self.generate()
-
-    def loadSkin(self):
-        surface = pygame.image.load(f'assets/skins/skin{self.car_color}.BMP')
+    def loadSkin(self, color):
+        surface = pygame.image.load(f'assets/skins/skin{color}.BMP')
         image = pygame.image.tostring(surface, 'RGBA', True)
         ix, iy = surface.get_rect().size
         texture_id = glGenTextures(1)

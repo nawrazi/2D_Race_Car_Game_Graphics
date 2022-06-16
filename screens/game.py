@@ -2,7 +2,27 @@ import pygame as pg
 import random
 
 class Game:
+    """
+    A class that contains the contents of the main game screen.
 
+    PARAMETERS
+    ----------
+    car_color : int
+        The color of the car selected at the first screen.
+
+    METHODS
+    -------
+    displayScore(x, y)
+        Displays the game score at the specified x and y coordinates.
+    crashScreen()
+        Displays the game over screen with the final score.
+    drawEnemy()
+        Draws an enemy car at the top of the screen.
+     drawPlayer()
+        Draws the player car at the center-bottom of the screem.
+    play()
+        Contains the main loop, handles user input and collision detection.
+    """
     def __init__(self, car_color):
         pg.init()
         self.screenWidth = 800
@@ -35,7 +55,7 @@ class Game:
             (x, y)
         )
 
-    def crashMessage(self):
+    def crashScreen(self):
         self.screen.blit(
             self.fonts['game_over'].render('Game Over', True, (175, 0, 0)),
             (self.screenWidth // 10, self.screenHeight // 3)
@@ -45,8 +65,6 @@ class Game:
             (self.screenWidth // 10, (self.screenHeight // 3) + 140)
         )
 
-    def crashScreen(self):
-        self.crashMessage()
         while True:
             for e in pg.event.get():
                 if e.type == pg.QUIT:
