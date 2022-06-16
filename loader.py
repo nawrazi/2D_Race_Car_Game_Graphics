@@ -5,7 +5,7 @@ class Loader:
 
     def __init__(self, filename, color):
         if not 0 <= color <= 6:
-            raise Exception("Invalid color selection")
+            raise Exception(f"Invalid color selection: {color}")
 
         self.car_color = color
         self.vertices = []

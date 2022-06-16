@@ -1,7 +1,5 @@
 from car_selector import *
+from game import *
 
 if __name__ == '__main__':
-    selection = CarSelector().run()
-    print(f'START GAME {selection}')
-
-    # START GAME
+    Game(CarSelector().run()).play()

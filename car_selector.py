@@ -39,6 +39,32 @@ class CarSelector:
 
         glCallList(self.model.gl_list)
 
+    def menu(self):
+        text_color = ((0, 0, 0, 255), (250, 240, 230, 0))
+        font = pygame.font.SysFont('futura', 16)
+
+        change_color_text = font.render('< Change Color >', True, *text_color)
+        random_color_text = font.render('R - Random Color', True, *text_color)
+        enter_game_text = font.render('ENTER - Start Game', True, *text_color)
+
+        change_color_data = pygame.image.tostring(change_color_text, "RGBA", True)
+        glWindowPos2d(10, 50)
+        glDrawPixels(
+            change_color_text.get_width(), change_color_text.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, change_color_data
+        )
+
+        random_color_data = pygame.image.tostring(random_color_text, "RGBA", True)
+        glWindowPos2d(10, 30)
+        glDrawPixels(
+            random_color_text.get_width(), random_color_text.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, random_color_data
+        )
+
+        enter_game_data = pygame.image.tostring(enter_game_text, "RGBA", True)
+        glWindowPos2d(10, 10)
+        glDrawPixels(
+            enter_game_text.get_width(), enter_game_text.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, enter_game_data
+        )
+
     def run(self):
         rx, ry, rz = 0, 0, 0
         rotate = False
@@ -54,9 +80,9 @@ class CarSelector:
                         return self.cur_color
 
                     if e.key == pygame.K_r:
-                        new_color = random.randint(0, self.all_skins)
+                        new_color = random.randint(0, self.all_skins - 1)
                         while new_color == self.cur_color:
-                            new_color = random.randint(0, self.all_skins)
+                            new_color = random.randint(0, self.all_skins - 1)
                         self.draw(new_color)
 
                     elif e.key == pygame.K_LEFT:
@@ -88,6 +114,7 @@ class CarSelector:
             glRotate(rz - 90, 0, 0, 1)
             glRotate(rx - 40, 0, 1, 0)
             glCallList(self.model.gl_list)
+            self.menu()
             self.draw()
 
             pygame.display.flip()
