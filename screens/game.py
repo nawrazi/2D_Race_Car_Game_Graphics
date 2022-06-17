@@ -67,7 +67,7 @@ class Game:
 
     def displayScore(self):
         self.screen.blit(
-            self.fonts['score'].render(f'Score: {self.score}', True, (200, 200, 255)),
+            self.fonts['score'].render(f'Score: {self.score}', True, (0, 0, 0)),
             (10, 10)
         )
 
@@ -88,7 +88,7 @@ class Game:
             pg.display.update()
 
     def drawEnemy(self):
-        self.enemy.y += 3
+        self.enemy.y += 1.5
         self.screen.blit(self.enemy.icon, (self.enemy.x, self.enemy.y))
 
     def drawPlayer(self):
